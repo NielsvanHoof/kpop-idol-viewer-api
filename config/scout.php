@@ -137,14 +137,7 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
-            \App\Models\Idol::class => [
-                'filterableAttributes' => [
-                    'group.name',
-                    'name',
-                    'birthdate',
-                    'stage_name',
-                ],
-            ]
+            //
         ],
     ],
 

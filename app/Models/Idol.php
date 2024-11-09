@@ -44,6 +44,11 @@ class Idol extends Model implements HasMedia
     }
 
 
+    public function toSearchableArray(): array
+    {
+        return $this->only('name', 'stage_name', 'bio', 'slug', 'nationality', 'position');
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

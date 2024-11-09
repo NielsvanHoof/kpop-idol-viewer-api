@@ -68,9 +68,14 @@ class IdolResource extends Resource
 
 
                 SpatieMediaLibraryFileUpload::make('profile_photo')
-                    ->rules('image', 'max:1024')
+                    ->image()
                     ->collection('profile_photo')
                     ->avatar(),
+
+                SpatieMediaLibraryFileUpload::make('photos')
+                    ->image()
+                    ->collection('photos')
+                    ->multiple(),
 
                 Hidden::make('is_slug_changed_manually')
                     ->default(false)

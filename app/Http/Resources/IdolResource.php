@@ -29,6 +29,8 @@ class IdolResource extends JsonResource
 
             'profile_picture' => $this->getMedia('profile_photo')->first()?->getUrl(),
 
+            'photos' => $this->getMedia('photos')->map(fn($photo) => $photo->getUrl()),
+
             'group_id' => $this->group_id,
 
             'group' => new GroupResource($this->whenLoaded('group')),

@@ -53,7 +53,6 @@ class GroupResource extends Resource
                 SpatieMediaLibraryFileUpload::make('cover_image')
                     ->image()
                     ->avatar()
-                    ->disk('s3')
                     ->collection('cover_images')
                     ->required(),
 
