@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,8 +17,16 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->environment('local')) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
             Model::shouldBeStrict();
         }
+
+        Gate::define('viewPulse', function (User $user) {
+           // ip address of the user
+            $ip = request()->ip();
+            // check if the user is in the allowed ip addresses
+            return in_array($ip, config('app.allowed_ip_addresses'));
+        });
     }
 
     /**
