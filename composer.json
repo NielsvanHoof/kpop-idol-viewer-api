@@ -13,6 +13,7 @@
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^11.9",
+        "laravel/pulse": "^1.2",
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.11",
         "laravel/tinker": "^2.9",
