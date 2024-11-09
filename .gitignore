@@ -22,3 +22,5 @@ yarn-error.log
 /.zed
 
 /public/vendor/*
+
+/app/Providers/TelescopeServiceProvider.php
