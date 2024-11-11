@@ -63,6 +63,11 @@ class IdolResource extends Resource
                     ->required(),
 
 
+                Hidden::make('is_slug_changed_manually')
+                    ->default(false)
+                    ->dehydrated(false),
+
+
                 TextInput::make('spotify_id')
                     ->placeholder('Spotify ID'),
 
@@ -76,10 +81,6 @@ class IdolResource extends Resource
                     ->image()
                     ->collection('photos')
                     ->multiple(),
-
-                Hidden::make('is_slug_changed_manually')
-                    ->default(false)
-                    ->dehydrated(false),
 
                 TextInput::make('stage_name'),
 

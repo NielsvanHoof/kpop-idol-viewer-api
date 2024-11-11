@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\Idol;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /** @mixin Idol */
 class IdolResource extends JsonResource
@@ -29,7 +30,7 @@ class IdolResource extends JsonResource
 
             'profile_picture' => $this->getMedia('profile_photo')->first()?->getUrl(),
 
-            'photos' => $this->getMedia('photos')->map(fn($photo) => $photo->getUrl()),
+            'photos' => $this->getMedia('photos')->map(fn(Media $photo) => $photo->getUrl()),
 
             'group_id' => $this->group_id,
 

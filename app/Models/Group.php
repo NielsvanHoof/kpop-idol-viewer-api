@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Group extends Model implements HasMedia
 {
-    use SoftDeletes, HasFactory, InteractsWithMedia;
+    use SoftDeletes, HasFactory, InteractsWithMedia, Searchable;
 
     protected $fillable = [
         'name',
@@ -19,7 +20,8 @@ class Group extends Model implements HasMedia
         'company',
         'bio',
         'social_media',
-        'spotify_id'
+        'spotify_id',
+        'slug'
     ];
 
     protected function casts(): array
@@ -30,6 +32,17 @@ class Group extends Model implements HasMedia
         ];
     }
 
+
+    public function toSearchableArray()
+    {
+        return $this->only('name', 'company', 'bio');
+    }
+
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     public function idols(): HasMany
     {

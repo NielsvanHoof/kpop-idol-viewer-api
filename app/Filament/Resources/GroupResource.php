@@ -5,12 +5,15 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\GroupResource\Pages;
 use App\Models\Group;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
@@ -25,6 +28,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class GroupResource extends Resource
 {
@@ -39,7 +43,26 @@ class GroupResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->reactive()
+                    ->required()
+                    ->afterStateUpdated(function (Set $set, Get $get, string $state) {
+                        if (!$get('is_slug_changed_manually') && filled($state)) {
+                            $set('slug', Str::slug($state));
+                        }
+
+                        $set('slug', Str::slug($state));
+                    }),
+
+                TextInput::make('slug')
+                    ->afterStateUpdated(function (Set $set) {
+                        $set('is_slug_changed_manually', true);
+                    })
                     ->required(),
+
+
+                Hidden::make('is_slug_changed_manually')
+                    ->default(false)
+                    ->dehydrated(false),
 
                 DatePicker::make('debut_date'),
 
@@ -55,6 +78,12 @@ class GroupResource extends Resource
                     ->avatar()
                     ->collection('cover_images')
                     ->required(),
+
+
+                SpatieMediaLibraryFileUpload::make('photos')
+                    ->image()
+                    ->collection('photos')
+                    ->multiple(),
 
                 MarkdownEditor::make('bio'),
 
