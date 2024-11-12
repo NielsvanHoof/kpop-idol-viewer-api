@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -33,7 +34,7 @@ class Group extends Model implements HasMedia
     }
 
 
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         return $this->only('name', 'company', 'bio');
     }
@@ -43,6 +44,12 @@ class Group extends Model implements HasMedia
     {
         return 'slug';
     }
+
+    public function scopeWhereScout(Builder $query, string $search): Builder
+    {
+        return $query->whereIn('id', self::search($search)->get()->pluck('id'));
+    }
+
 
     public function idols(): HasMany
     {
