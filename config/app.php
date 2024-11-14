@@ -122,11 +122,4 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
-
-    'allowed_ip_addresses' => [
-        '18.197.141.92',
-        '10.0.1.142',
-        '192.168.2.104'
-    ],
 ];
